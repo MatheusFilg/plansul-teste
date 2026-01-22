@@ -2,11 +2,11 @@
 
 import { DataTable } from "@/components/custom/data-table";
 import { Input } from "@/components/ui/input";
-import { useEstoque } from "@/hooks/use-estoque";
-import { estoqueColumns } from "../estoque/estoque-columns";
+import { estoqueMovimentacaoColumns } from "../estoque-movimentacao/estoque-movimentacao-columns";
+import { useEstoqueMovimentacao } from "@/hooks/use-estoque-movimentacao";
 
-export function EstoqueView() {
-  const { data: estoque, isLoading, isError, error } = useEstoque();
+export function EstoqueMovimentacaoView() {
+  const { data: estoqueMovimentacao, isLoading, isError, error } = useEstoqueMovimentacao();
 
 
   if (isError) {
@@ -19,8 +19,8 @@ export function EstoqueView() {
 
   return (
       <DataTable
-        columns={estoqueColumns}
-        data={estoque || []}
+        columns={estoqueMovimentacaoColumns}
+        data={estoqueMovimentacao || []}
         isLoading={isLoading}
         searchComponent={
           <Input placeholder="Buscar produtos..." className="max-w-sm" />

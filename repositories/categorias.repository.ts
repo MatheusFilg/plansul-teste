@@ -1,5 +1,5 @@
 import prisma from '@/lib/db';
-import { categorias } from '@/generated/prisma/client';
+import { categorias } from '@/app/generated/prisma/client';
 
 export const findAll = async (): Promise<categorias[]> => {
   return prisma.categorias.findMany();

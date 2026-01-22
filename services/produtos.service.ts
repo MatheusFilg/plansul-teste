@@ -1,5 +1,5 @@
 import * as repository from '@/repositories/produtos.repository';
-import { produtos } from '@/generated/prisma/client';
+import { produtos } from '@/app/generated/prisma/client';
 
 export const getAllProdutos = async (): Promise<produtos[]> => {
   return repository.findAll();

@@ -1,5 +1,5 @@
 import * as repository from '@/repositories/categorias.repository';
-import { categorias } from '@/generated/prisma/client';
+import { categorias } from '@/app/generated/prisma/client';
 
 export const getAllCategorias = async (): Promise<categorias[]> => {
   return repository.findAll();

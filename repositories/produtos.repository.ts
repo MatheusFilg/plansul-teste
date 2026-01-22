@@ -1,5 +1,5 @@
 import prisma from '@/lib/db';
-import { produtos } from '@/generated/prisma/client';
+import { produtos } from '@/app/generated/prisma/client';
 
 export const findAll = async (): Promise<produtos[]> => {
   return prisma.produtos.findMany({

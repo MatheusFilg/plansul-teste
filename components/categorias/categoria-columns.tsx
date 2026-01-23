@@ -29,7 +29,6 @@ export function getUniqueColumnValues<TData>(
       value !== null &&
       "id" in value
     ) {
-      // Asserção segura de que existe um 'id'
       value = (value as { id: unknown }).id;
     }
 
@@ -49,7 +48,40 @@ export const createCategoriaColumns = (
 ): ColumnDef<Categoria>[] => [
   {
     accessorKey: "id",
-    header: "Id",
+    header: ({ column }) => {
+      const isSorted = column.getIsSorted();
+      
+      return (
+        <div className="flex items-center gap-1">
+          <span>Id</span>
+          <div className="flex items-center">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 p-0"
+              onClick={() => {
+                if (isSorted === "asc") {
+                  column.toggleSorting(true); 
+                } else if (isSorted === "desc") {
+                  column.clearSorting();
+                } else {
+                  column.toggleSorting(false);
+                }
+              }}
+              title="Ordenar"
+            >
+              {isSorted === "asc" ? (
+                <ArrowUp className="h-4 w-4 text-primary" />
+              ) : isSorted === "desc" ? (
+                <ArrowDown className="h-4 w-4 text-primary" />
+              ) : (
+                <ArrowUpDown className="h-4 w-4" />
+              )}
+            </Button>
+          </div>
+        </div>
+      )
+    },
     enableSorting: true,
     enableColumnFilter: false,
   },

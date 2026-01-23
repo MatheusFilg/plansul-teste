@@ -1,20 +1,19 @@
 "use client";
-import { rankItem } from '@tanstack/match-sorter-utils';
+import * as React from "react";
 import {
   ColumnDef,
-  ColumnFiltersState,
-  FilterFn,
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
+  useReactTable,
   getPaginationRowModel,
+  getFilteredRowModel,
   getSortedRowModel,
   SortingState,
-  useReactTable,
+  ColumnFiltersState,
+  FilterFn,
   VisibilityState,
 } from "@tanstack/react-table";
-import * as React from "react";
-import { Button } from "../ui/button";
+import { rankItem } from '@tanstack/match-sorter-utils';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -22,14 +21,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from "../ui/dropdown-menu";
+import { Button } from "../ui/button";
 import { Skeleton } from "../ui/skeleton";
 import {
-  Table,
-  TableBody,
+  TableRow,
   TableCell,
-  TableHead,
   TableHeader,
-  TableRow
+  TableHead,
+  TableBody, Table
 } from "../ui/table";
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {

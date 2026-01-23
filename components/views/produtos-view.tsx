@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useProdutos, Produto } from "@/hooks/use-produtos";
 import { DataTable } from "@/components/custom/data-table";
 import { Input } from "@/components/ui/input";
@@ -33,6 +33,10 @@ export function ProdutosView() {
     setIsDeleteModalOpen(true);
   };
 
+  const columns = useMemo(() => {
+    return produtoColumns(produtos || []);
+  }, [produtos]);
+  
   if (isError) {
     return (
       <div className="text-red-500">
@@ -44,7 +48,7 @@ export function ProdutosView() {
   return (
     <>
       <DataTable
-        columns={produtoColumns}
+        columns={columns}
         data={produtos || []}
         onEdit={handleEdit}
         onDelete={handleDelete}

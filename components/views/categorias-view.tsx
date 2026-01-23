@@ -1,14 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import { useCategories, Categoria } from "@/hooks/use-categorias";
-import { DataTable } from "@/components/custom/data-table";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { categoriaColumns } from "@/components/categorias/categoria-columns";
 import { AddCategoryModal } from "@/components/categorias/categoria-add-modal";
-import { EditCategoryModal } from "@/components/categorias/categoria-edit-modal";
+import { createCategoriaColumns } from "@/components/categorias/categoria-columns";
 import { DeleteCategoryDialog } from "@/components/categorias/categoria-delete-dialog";
+import { EditCategoryModal } from "@/components/categorias/categoria-edit-modal";
+import { DataTable } from "@/components/custom/data-table";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Categoria, useCategories } from "@/hooks/use-categorias";
+import { useMemo, useState } from "react";
 
 export function CategoriasView() {
   const { data: categories, isLoading, isError, error } = useCategories();
@@ -21,6 +21,7 @@ export function CategoriasView() {
   const [categoryIdToDelete, setCategoryIdToDelete] = useState<string | null>(
     null,
   );
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   const handleEdit = (id: string) => {
     const categoryToEdit = categories?.find((cat) => cat.id === id);
@@ -35,6 +36,18 @@ export function CategoriasView() {
     setIsDeleteModalOpen(true);
   };
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+  
+  const columns = useMemo(() => {
+    return createCategoriaColumns(categories || []);
+  }, [categories]);
+
+
+  const currentCategories = categories || [];
+
+
   if (isError) {
     return (
       <div className="text-red-500">
@@ -46,13 +59,17 @@ export function CategoriasView() {
   return (
     <>
       <DataTable
-        columns={categoriaColumns}
-        data={categories || []}
+        columns={columns} 
+        data={currentCategories} 
         onEdit={handleEdit}
         onDelete={handleDelete}
         isLoading={isLoading}
         searchComponent={
-          <Input placeholder="Buscar categorias..." className="max-w-sm" />
+          <Input placeholder="Buscar categorias..."
+            className="max-w-sm"
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
         }
         actionButtons={[
           <Button key="new-category" onClick={() => setIsAddModalOpen(true)}>

@@ -10,38 +10,39 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Categoria } from "@/hooks/use-categorias";
+import { getUniqueColumnValues } from "@/utils/getUniqueColumnValues";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { ArrowDown, ArrowUp, ArrowUpDown, Filter } from "lucide-react";
 
-export function getUniqueColumnValues<TData>(
-  data: TData[],
-  columnId: string
-): unknown[] {
-  const values = new Set<unknown>();
+// export function getUniqueColumnValues<TData>(
+//   data: TData[],
+//   columnId: string
+// ): unknown[] {
+//   const values = new Set<unknown>();
   
-  data.forEach((row) => {
-    const rowData = row as Record<string, unknown>;
-    let value = rowData[columnId];
+//   data.forEach((row) => {
+//     const rowData = row as Record<string, unknown>;
+//     let value = rowData[columnId];
 
-    if (
-      typeof value === "object" &&
-      value !== null &&
-      "id" in value
-    ) {
-      value = (value as { id: unknown }).id;
-    }
+//     if (
+//       typeof value === "object" &&
+//       value !== null &&
+//       "id" in value
+//     ) {
+//       value = (value as { id: unknown }).id;
+//     }
 
-    if (value !== undefined && value !== null) {
-      values.add(value);
-    }
-  });
+//     if (value !== undefined && value !== null) {
+//       values.add(value);
+//     }
+//   });
 
-  return Array.from(values).sort((a, b) => {
-      if (typeof a === 'number' && typeof b === 'number') return a - b;
-      return String(a).localeCompare(String(b));
-  });
-}
+//   return Array.from(values).sort((a, b) => {
+//       if (typeof a === 'number' && typeof b === 'number') return a - b;
+//       return String(a).localeCompare(String(b));
+//   });
+// }
 
 export const createCategoriaColumns = (
   allTableData: Categoria[]

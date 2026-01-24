@@ -13,39 +13,40 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ArrowDown, ArrowUp, ArrowUpDown, Filter } from "lucide-react";
+import { getUniqueColumnValues } from "@/utils/getUniqueColumnValues";
 
-export function getUniqueColumnValues<TData>(
-  data: TData[],
-  columnId: string
-): unknown[] {
-  const values = new Set<unknown>();
+// export function getUniqueColumnValues<TData>(
+//   data: TData[],
+//   columnId: string
+// ): unknown[] {
+//   const values = new Set<unknown>();
   
-  data.forEach((row) => {
-    let currentValue: any = row;
-    const keys = columnId.split('.');
+//   data.forEach((row) => {
+//     let currentValue: any = row;
+//     const keys = columnId.split('.');
 
-    for (const key of keys) {
-      if (currentValue === null || typeof currentValue !== 'object') {
-        currentValue = undefined;
-        break;
-      }
-      currentValue = currentValue[key];
-    }
+//     for (const key of keys) {
+//       if (currentValue === null || typeof currentValue !== 'object') {
+//         currentValue = undefined;
+//         break;
+//       }
+//       currentValue = currentValue[key];
+//     }
     
-    if (typeof currentValue === "object" && currentValue !== null && "id" in currentValue) {
-      currentValue = currentValue.id;
-    }
+//     if (typeof currentValue === "object" && currentValue !== null && "id" in currentValue) {
+//       currentValue = currentValue.id;
+//     }
 
-    if (currentValue !== undefined && currentValue !== null) {
-      values.add(currentValue);
-    }
-  });
+//     if (currentValue !== undefined && currentValue !== null) {
+//       values.add(currentValue);
+//     }
+//   });
 
-  return Array.from(values).sort((a, b) => {
-      if (typeof a === 'number' && typeof b === 'number') return a - b;
-      return String(a).localeCompare(String(b));
-  });
-}
+//   return Array.from(values).sort((a, b) => {
+//       if (typeof a === 'number' && typeof b === 'number') return a - b;
+//       return String(a).localeCompare(String(b));
+//   });
+// }
 
 export const estoqueColumns= (allTableData: Estoque[]): ColumnDef<Estoque>[] => [
   {

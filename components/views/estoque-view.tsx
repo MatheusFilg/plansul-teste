@@ -1,13 +1,17 @@
 "use client";
 
 import { DataTable } from "@/components/custom/data-table";
-import { Input } from "@/components/ui/input";
 import { useEstoque } from "@/hooks/use-estoque";
 import { estoqueColumns } from "../estoque/estoque-columns";
+import { useMemo } from "react";
 
 export function EstoqueView() {
   const { data: estoque, isLoading, isError, error } = useEstoque();
 
+  
+  const columns = useMemo(() => {
+    return estoqueColumns(estoque || []);
+  }, [estoque]);
 
   if (isError) {
     return (
@@ -19,12 +23,9 @@ export function EstoqueView() {
 
   return (
       <DataTable
-        columns={estoqueColumns}
+        columns={columns}
         data={estoque || []}
         isLoading={isLoading}
-        searchComponent={
-          <Input placeholder="Buscar produtos..." className="max-w-sm" />
-        }
       />
   );
 }

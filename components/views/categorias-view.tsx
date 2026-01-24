@@ -64,6 +64,7 @@ export function CategoriasView() {
         onEdit={handleEdit}
         onDelete={handleDelete}
         isLoading={isLoading}
+        pageSize={10}
         searchComponent={
           <Input placeholder="Buscar categorias..."
             className="max-w-sm"

@@ -53,6 +53,7 @@ export function ProdutosView() {
         onEdit={handleEdit}
         onDelete={handleDelete}
         isLoading={isLoading}
+        pageSize={10}
         searchComponent={
           <Input placeholder="Buscar produtos..." className="max-w-sm" />
         }

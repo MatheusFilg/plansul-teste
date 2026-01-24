@@ -44,7 +44,8 @@ interface DataTableProps<TData extends { id: string }, TValue> {
 	onDelete?: (id: string) => void;
 	isLoading?: boolean;
 	searchComponent?: React.ReactNode;
-	actionButtons?: React.ReactNode[];
+  actionButtons?: React.ReactNode[];
+	pageSize?: number;
 }
 
 export function DataTable<TData extends { id: string }, TValue>({
@@ -54,7 +55,8 @@ export function DataTable<TData extends { id: string }, TValue>({
 	onDelete,
 	isLoading = false,
 	searchComponent,
-	actionButtons,
+  actionButtons,
+  pageSize = 10,
 }: DataTableProps<TData, TValue>) {
 	const [sorting, setSorting] = React.useState<SortingState>([]);
 	const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -74,7 +76,12 @@ export function DataTable<TData extends { id: string }, TValue>({
 		onSortingChange: setSorting,
 		onColumnFiltersChange: setColumnFilters,
 		onGlobalFilterChange: setGlobalFilter,
-		onColumnVisibilityChange: setColumnVisibility,
+    onColumnVisibilityChange: setColumnVisibility,
+    initialState: {
+      pagination: {
+        pageSize: pageSize,
+      },
+    },
 		state: {
 			sorting,
 			columnFilters,
@@ -87,6 +94,9 @@ export function DataTable<TData extends { id: string }, TValue>({
 		globalFilterFn: fuzzyFilter,
 	});
 
+  React.useEffect(() => {
+    table.setPageSize(pageSize);
+  }, [pageSize, table]);
 
   const generateSkeletonRow = (columnCount: number, key: number) => (
     <TableRow key={key}>

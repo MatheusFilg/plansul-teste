@@ -26,6 +26,7 @@ export function EstoqueView() {
         columns={columns}
         data={estoque || []}
         isLoading={isLoading}
+        pageSize={10}
       />
   );
 }

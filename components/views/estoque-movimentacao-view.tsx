@@ -31,6 +31,7 @@ export function EstoqueMovimentacaoView() {
         columns={columns}
         data={estoqueMovimentacao || []}
         isLoading={isLoading}
+        pageSize={10}
         searchComponent={
           <Input placeholder="Buscar produtos..." className="max-w-sm" />
         }

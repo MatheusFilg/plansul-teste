@@ -3,53 +3,19 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { format, isValid } from "date-fns";
 import { EstoqueMovimentacao } from "@/hooks/use-estoque-movimentacao";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { ArrowDown, ArrowUp, ArrowUpDown, Filter } from "lucide-react";
-import { getUniqueColumnValues } from "@/utils/getUniqueColumnValues";
-
+import { SortButton } from "../custom/sort-button";
+import { FilterMenu } from "../custom/filter-menu";
 
 
 export const estoqueMovimentacaoColumns = (allTableData: EstoqueMovimentacao[]): ColumnDef<EstoqueMovimentacao>[] => [
   {
     accessorKey: "id",
     header: ({ column }) => {
-      const isSorted = column.getIsSorted();
-      
       return (
         <div className="flex items-center gap-1">
           <span>Id</span>
           <div className="flex items-center">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8 p-0"
-              onClick={() => {
-                if (isSorted === "asc") {
-                  column.toggleSorting(true); 
-                } else if (isSorted === "desc") {
-                  column.clearSorting();
-                } else {
-                  column.toggleSorting(false);
-                }
-              }}
-              title="Ordenar"
-            >
-              {isSorted === "asc" ? (
-                <ArrowUp className="h-4 w-4 text-primary" />
-              ) : isSorted === "desc" ? (
-                <ArrowDown className="h-4 w-4 text-primary" />
-              ) : (
-                <ArrowUpDown className="h-4 w-4" />
-              )}
-            </Button>
+            <SortButton column={column} />
           </div>
         </div>
       )
@@ -60,69 +26,13 @@ export const estoqueMovimentacaoColumns = (allTableData: EstoqueMovimentacao[]):
   {
     accessorKey: "produto_id",
     header: ({ column }) => {
-      const isSorted = column.getIsSorted();
-      const isFiltered = column.getFilterValue() != null && column.getFilterValue() !== "";
       return (
         <div className="flex items-center gap-1">
           <span className="font-medium">Id Produto</span>
           <div className="flex items-center">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8 p-0"
-              onClick={() => {
-                if (isSorted === "asc") {
-                  column.toggleSorting(true); 
-                } else if (isSorted === "desc") {
-                  column.clearSorting();
-                } else {
-                  column.toggleSorting(false);
-                }
-              }}
-              title="Ordenar"
-            >
-              {isSorted === "asc" ? (
-                <ArrowUp className="h-4 w-4 text-primary" />
-              ) : isSorted === "desc" ? (
-                <ArrowDown className="h-4 w-4 text-primary" />
-              ) : (
-                <ArrowUpDown className="h-4 w-4" />
-              )}
-            </Button>
+            <SortButton column={column} />
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className={`h-8 w-8 p-0 ${isFiltered ? "bg-primary/10 text-primary hover:bg-primary/20" : ""}`}
-                  title="Filtrar"
-                >
-                  <Filter className={`h-4 w-4 ${isFiltered ? "fill-current" : ""}`} />
-                </Button>
-              </DropdownMenuTrigger>
-              {column.getCanFilter() && (
-                <DropdownMenuContent align="start" className="w-48 max-h-64 overflow-y-auto">
-                  
-                  {getUniqueColumnValues(allTableData, column.id).map((value) => (
-                    <DropdownMenuCheckboxItem
-                      key={String(value)}
-                      checked={column.getFilterValue() === value}
-                      onCheckedChange={(checked) =>
-                        column.setFilterValue(checked ? value : "")
-                      }
-                      className="capitalize"
-                    >
-                      {String(value)}
-                    </DropdownMenuCheckboxItem>
-                  ))}
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => column.setFilterValue("")} className="text-red-500">
-                    Limpar filtro
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              )}
-            </DropdownMenu>
+            <FilterMenu column={column} allTableData={allTableData} />
           </div>
         </div>
       )
@@ -134,35 +44,11 @@ export const estoqueMovimentacaoColumns = (allTableData: EstoqueMovimentacao[]):
   {
     accessorKey: "quantidade",
     header: ({ column }) => {
-      const isSorted = column.getIsSorted();
-      
       return (
         <div className="flex items-center gap-1">
           <span>Quantidade</span>
           <div className="flex items-center">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8 p-0"
-              onClick={() => {
-                if (isSorted === "asc") {
-                  column.toggleSorting(true); 
-                } else if (isSorted === "desc") {
-                  column.clearSorting();
-                } else {
-                  column.toggleSorting(false);
-                }
-              }}
-              title="Ordenar"
-            >
-              {isSorted === "asc" ? (
-                <ArrowUp className="h-4 w-4 text-primary" />
-              ) : isSorted === "desc" ? (
-                <ArrowDown className="h-4 w-4 text-primary" />
-              ) : (
-                <ArrowUpDown className="h-4 w-4" />
-              )}
-            </Button>
+            <SortButton column={column} />
           </div>
         </div>
       )
@@ -173,69 +59,13 @@ export const estoqueMovimentacaoColumns = (allTableData: EstoqueMovimentacao[]):
   {
     accessorKey: "tipo",
     header: ({ column }) => {
-      const isSorted = column.getIsSorted();
-      const isFiltered = column.getFilterValue() != null && column.getFilterValue() !== "";
       return (
         <div className="flex items-center gap-1">
           <span className="font-medium">Tipo de Movimentação</span>
           <div className="flex items-center">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8 p-0"
-              onClick={() => {
-                if (isSorted === "asc") {
-                  column.toggleSorting(true); 
-                } else if (isSorted === "desc") {
-                  column.clearSorting();
-                } else {
-                  column.toggleSorting(false);
-                }
-              }}
-              title="Ordenar"
-            >
-              {isSorted === "asc" ? (
-                <ArrowUp className="h-4 w-4 text-primary" />
-              ) : isSorted === "desc" ? (
-                <ArrowDown className="h-4 w-4 text-primary" />
-              ) : (
-                <ArrowUpDown className="h-4 w-4" />
-              )}
-            </Button>
+            <SortButton column={column} />
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className={`h-8 w-8 p-0 ${isFiltered ? "bg-primary/10 text-primary hover:bg-primary/20" : ""}`}
-                  title="Filtrar"
-                >
-                  <Filter className={`h-4 w-4 ${isFiltered ? "fill-current" : ""}`} />
-                </Button>
-              </DropdownMenuTrigger>
-              {column.getCanFilter() && (
-                <DropdownMenuContent align="start" className="w-48 max-h-64 overflow-y-auto">
-                  
-                  {getUniqueColumnValues(allTableData, column.id).map((value) => (
-                    <DropdownMenuCheckboxItem
-                      key={String(value)}
-                      checked={column.getFilterValue() === value}
-                      onCheckedChange={(checked) =>
-                        column.setFilterValue(checked ? value : "")
-                      }
-                      className="capitalize"
-                    >
-                      {String(value)}
-                    </DropdownMenuCheckboxItem>
-                  ))}
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => column.setFilterValue("")} className="text-red-500">
-                    Limpar filtro
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              )}
-            </DropdownMenu>
+            <FilterMenu column={column} allTableData={allTableData} />
           </div>
         </div>
       )

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import * as service from '@/services/categorias.service';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/client';
 
 interface Params {
   params: Promise<{ id: string; }>;
@@ -56,6 +57,13 @@ export async function DELETE(
     await service.deleteCategoria(id);
     return new NextResponse(null, { status: 204 });
   } catch (error) {
+    if (error instanceof PrismaClientKnownRequestError && error.code === 'P2003') {
+          return NextResponse.json(
+            { error: 'Não é possível excluir esta categoria pois ela possui produtos vinculados.' },
+            { status: 400 }
+          );
+        }
+    
     if (error instanceof Error && error.message.includes('not found')) {
       return NextResponse.json({ error: 'Categoria não encontrada para exclusão' }, { status: 404 });
     }

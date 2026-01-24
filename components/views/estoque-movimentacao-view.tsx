@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { estoqueMovimentacaoColumns } from "../estoque-movimentacao/estoque-movimentacao-columns";
 import { useEstoqueMovimentacao } from "@/hooks/use-estoque-movimentacao";
 import { Button } from "../ui/button";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { AddTransactionModal } from "../estoque-movimentacao/estoque-movimentacao-add-modal";
 
 export function EstoqueMovimentacaoView() {
@@ -13,7 +13,10 @@ export function EstoqueMovimentacaoView() {
   
   const { data: estoqueMovimentacao, isLoading, isError, error } = useEstoqueMovimentacao();
 
-
+  const columns = useMemo(() => {
+    return estoqueMovimentacaoColumns(estoqueMovimentacao || []);
+  }, [estoqueMovimentacao]);
+  
   if (isError) {
     return (
       <div className="text-red-500">
@@ -25,7 +28,7 @@ export function EstoqueMovimentacaoView() {
   return (
     <>
       <DataTable
-        columns={estoqueMovimentacaoColumns}
+        columns={columns}
         data={estoqueMovimentacao || []}
         isLoading={isLoading}
         searchComponent={

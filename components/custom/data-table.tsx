@@ -216,7 +216,7 @@ export function DataTable<TData extends { id: string }, TValue>({
 										<TableCell className="text-right">
 											{onEdit && (
 												<Button
-													variant="ghost"
+													variant="outline"
 													onClick={() => onEdit(row.original.id)}
 													className="mr-2"
 												>
@@ -225,7 +225,7 @@ export function DataTable<TData extends { id: string }, TValue>({
 											)}
 											{onDelete && (
 												<Button
-													variant="ghost"
+													variant="destructive"
 													onClick={() => onDelete(row.original.id)}
 												>
 													Delete
